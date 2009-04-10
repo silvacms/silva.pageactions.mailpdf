@@ -24,6 +24,8 @@ setup(name='silva.pageactions.mailpdf',
       zip_safe=False,
       install_requires=[
         'setuptools',
+        'five.grok',
+        'megrok.chameleon',
         'silva.core.views',
         'silva.pageactions.base',
         'silva.pageactions.pdf',
