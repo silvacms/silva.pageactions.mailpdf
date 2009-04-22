@@ -3,6 +3,8 @@
    i18n:domain="pageactions">
 
   <a href="${path:context/@@absolute_url}/@@mailthatpage.html"
-     class="mail-pageaction"><span i18n:translate="">Mail</span></a>
+     class="mail-pageaction"
+     title="Send by mail"
+     i18n:attributes="title"><span i18n:translate="">Mail</span></a>
 
 </tal:block>
