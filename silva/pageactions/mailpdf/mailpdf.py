@@ -9,9 +9,11 @@ import StringIO
 from smtplib import SMTPException
 
 from zope import interface, schema, component
+from zope.i18n import translate
 from zope.i18nmessageid import MessageFactory
 from zope.traversing.browser import absoluteURL
 
+from Products.Silva import mangle
 from Products.Silva.mail import sendmail
 from Products.SilvaLayout import interfaces
 
@@ -42,13 +44,14 @@ class MailThatPage(silvaforms.PublicForm):
     def send(self, to, subject, captcha):
 
         metadata = interfaces.IMetadata(self.context.get_root())
-        mail_body = metadata('mail-pageactions', 'body')
+        mail_body = metadata('mail-pageactions', 'mail-body')
         mail_from = metadata('mail-pageactions', 'mail-from')
 
         url = absoluteURL(self.context, self.request)
         mail_body = mail_body % {'title': self.context.get_title(), 'url': url}
         content_type= 'application/pdf; name=%s.pdf' % self.context.getId()
-        pdf = getMultiAdapter((self.context, self.request), name="index.pdf").pdf()
+        pdf = component.getMultiAdapter(
+            (self.context, self.request), name="index.pdf").pdf()
 
         message = StringIO.StringIO()
         writer = MimeWriter.MimeWriter(message)
@@ -72,11 +75,14 @@ class MailThatPage(silvaforms.PublicForm):
         writer.lastpart()
 
         try:
-            sendmail(self.context, message.getvalue())
+            sendmail(self.context, message.getvalue(), to, mail_from, subject)
         except SMTPException, e:
             self.status = str(e)
         else:
-            self.redirect(url)
+            exit_url = mangle.urlencode(
+                url, message_status=translate(
+                    _(u"Your message have been sent."), context=self.request))
+            self.redirect(exit_url)
 
 
 class MailPDFAction(PageAction):
