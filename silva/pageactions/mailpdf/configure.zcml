@@ -1,6 +1,7 @@
 <configure
    xmlns="http://namespaces.zope.org/zope"
    xmlns:five="http://namespaces.zope.org/five"
+   xmlns:i18n="http://namespaces.zope.org/i18n"
    xmlns:grok="http://namespaces.zope.org/grok">
 
   <include package="five.grok" />
@@ -10,6 +11,7 @@
   <include package="silva.pageactions.pdf" />
   <include package="silva.captcha" />
 
+  <i18n:registerTranslations directory="i18n" />
   <five:registerPackage package="." initialize=".initialize" />
   <grok:grok package="." />
 
