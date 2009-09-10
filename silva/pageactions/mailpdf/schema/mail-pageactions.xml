@@ -21,7 +21,7 @@
       <expr></expr>
     </write_guard>
     <field_values>
-      <value key="required" type="int" value="1" />
+      <value key="required" type="int" value="0" />
       <value key="description" type="str" value="Mail sender (from address)" />
       <value key="truncate" type="int" value="0" />
       <value key="title" type="str" value="Sender" />
@@ -82,7 +82,7 @@
       <expr></expr>
     </write_guard>
     <field_values>
-      <value key="required" type="int" value="1" />
+      <value key="required" type="int" value="0" />
       <value key="description" type="str" value="Modify the text for the mail here, %(title)s and %(url)s will be respectively replaced with the title and url of the document." />
       <value key="truncate" type="int" value="0" />
       <value key="title" type="str" value="Mail body" />
