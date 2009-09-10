@@ -5,7 +5,7 @@ from silva.core.conf.installer import DefaultInstaller
 
 
 class IExtension(Interface):
-    """Extension to send maol.
+    """Extension to send mail.
     """
 
 METADATA = {('Silva Root', 'Silva Publication',): ('mail-pageactions',)}

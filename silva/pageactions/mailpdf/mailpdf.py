@@ -47,6 +47,16 @@ class MailThatPage(silvaforms.PublicForm):
         mail_body = metadata('mail-pageactions', 'mail-body')
         mail_from = metadata('mail-pageactions', 'mail-from')
 
+        if (not mail_from) or (not mail_body):
+            self.status = _(u"Mail settings are not configured, "
+                            "can't send mail at the moment.")
+            return
+
+        # UTF-8 safe
+        to = to.encode('utf-8')
+        subject = subject.encode('utf-8')
+        mail_from = mail_from.encode('utf-8')
+
         url = absoluteURL(self.context, self.request)
         mail_body = mail_body % {'title': self.context.get_title(), 'url': url}
         content_type= 'application/pdf; name=%s.pdf' % self.context.getId()
@@ -58,7 +68,7 @@ class MailThatPage(silvaforms.PublicForm):
         writer.addheader('MIME-Version', '1.0')
         writer.addheader('Subject', subject)
         writer.addheader('To', to)
-        writer.addheader('From', mail_from.encode('utf-8'))
+        writer.addheader('From', mail_from)
         writer.startmultipartbody('mixed')
 
         # start off with a text/plain part
