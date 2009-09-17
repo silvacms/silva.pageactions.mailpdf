@@ -15,10 +15,10 @@ class MailInstaller(DefaultInstaller):
     __name__ = 'silva.pageactions.mailpdf.install'
 
     def install_custom(self, root):
-        self.configure_metadata(root, METADATA, globals())
+        self.configureMetadata(root, METADATA, globals())
 
     def uninstall_custom(self, root):
-        self.unconfigure_metadata(root, METADATA)
+        self.unconfigureMetadata(root, METADATA)
 
 
 install = MailInstaller('silva.pageactions.mailpdf', IExtension)
