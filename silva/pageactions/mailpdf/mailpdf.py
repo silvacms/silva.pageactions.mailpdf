@@ -91,7 +91,7 @@ class MailThatPage(silvaforms.PublicForm):
         else:
             exit_url = mangle.urlencode(
                 url, message_status=translate(
-                    _(u"Your message have been sent."), context=self.request))
+                    _(u"Your message has been sent."), context=self.request))
             self.redirect(exit_url)
 
 
