@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: mailpdf trunkPOT-Creation-Date: Fri Aug 28 11:46:56 2009\n"
-"PO-Revision-Date: 2009-11-02 15:52+0100\n"
+"PO-Revision-Date: 2009-11-12 11:28+0100\n"
 "Last-Translator: Wim Boucquaert <wim@infrae.com>\n"
 "Language-Team: Silva Translators <eric+i18n@infrae.com>\n"
 "MIME-Version: 1.0\n"
@@ -12,11 +12,11 @@ msgstr ""
 
 #: /mailpdf.py:31
 msgid "To"
-msgstr ""
+msgstr "An"
 
 #: /mailpdf.py:32
 msgid "Subject"
-msgstr ""
+msgstr "Betreff"
 
 #: /mailpdf.py:33
 msgid "Captcha"
@@ -24,37 +24,37 @@ msgstr "Captcha"
 
 #: /mailpdf.py:41
 msgid "Send this page by mail"
-msgstr ""
+msgstr "Seite per E-Mail versenden"
 
 #: /mailpdf.py:43
 msgid "Send"
-msgstr ""
+msgstr "Senden"
 
 #: /mailpdf.py:84
 msgid "Your message have been sent."
-msgstr ""
+msgstr "Ihre Nachricht wurde versendet."
 
 #: /mailpdf_templates/mailpdfaction.cpt:5
 msgid "Send by mail"
-msgstr ""
+msgstr "Per E-Mail versenden"
 
 #: /mailpdf_templates/mailpdfaction.cpt:8
 msgid "Mail"
-msgstr ""
+msgstr "E-mail"
 
 #: /schema/mail-pageactions.xml:25
 msgid "Mail sender (from address)"
-msgstr ""
+msgstr "Absender (Von-Adresse)"
 
 #: /schema/mail-pageactions.xml:27
 msgid "Sender"
-msgstr ""
+msgstr "Absender"
 
 #: /schema/mail-pageactions.xml:86
 msgid "Modify the text for the mail here, %(title)s and %(url)s will be respectively replaced with the title and url of the document."
-msgstr ""
+msgstr "Verändern Sie den Text der E-Mail hier, %(title)s und %(url)s werden entsprechend durch durch den Titel und die URL des Dokuments ersetzt."
 
 #: /schema/mail-pageactions.xml:88
 msgid "Mail body"
-msgstr ""
+msgstr "Nachrichtentext"
 
