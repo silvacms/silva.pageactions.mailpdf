@@ -17,9 +17,10 @@ from Products.Silva import mangle
 from Products.Silva.mail import sendmail
 from Products.SilvaLayout import interfaces
 
-from silva.pageactions.base.base import PageAction
-from silva.core.views import forms as silvaforms
 from collective.captcha.form.field import Captcha
+from silva.core.views import forms as silvaforms
+from silva.core.views.interfaces import IHTTPResponseHeaders
+from silva.pageactions.base.base import PageAction
 
 from five import grok
 
@@ -39,6 +40,10 @@ class MailThatPage(silvaforms.PublicForm):
     form_fields = grok.Fields(IMailForm)
 
     label = _(u"Send this page by mail")
+
+    def update(self):
+        component.getMultiAdapter(
+            (self.context, self.request), IHTTPResponseHeaders)()
 
     @grok.action(_(u"Send"))
     def send(self, to, subject, captcha):
