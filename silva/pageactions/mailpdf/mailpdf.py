@@ -15,7 +15,7 @@ from zope.traversing.browser import absoluteURL
 
 from Products.Silva import mangle
 from Products.Silva.mail import sendmail
-from Products.SilvaLayout import interfaces
+from silva.core.layout import interfaces
 
 from collective.captcha.form.field import Captcha
 from silva.core.views import forms as silvaforms
