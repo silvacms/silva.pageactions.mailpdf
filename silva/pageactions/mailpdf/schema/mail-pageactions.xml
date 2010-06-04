@@ -5,7 +5,7 @@
 <description>Settings for mail pageactions</description>
 <minimalrole>Chief Editor</minimalrole>
   <metadata_element id="mail-from">
-    <index_type>TextIndex</index_type>
+    <index_type>ZCTextIndex</index_type>
     <index_p>0</index_p>
     <field_type>StringField</field_type>
     <acquire_p>1</acquire_p>
@@ -66,7 +66,7 @@
   </metadata_element>
  
   <metadata_element id="mail-body">
-    <index_type>TextIndex</index_type>
+    <index_type>ZCTextIndex</index_type>
     <index_p>0</index_p>
     <field_type>TextAreaField</field_type>
     <acquire_p>1</acquire_p>
