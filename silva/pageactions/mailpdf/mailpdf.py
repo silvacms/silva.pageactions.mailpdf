@@ -16,7 +16,7 @@ from zope.traversing.browser import absoluteURL
 from Products.Silva import mangle
 from Products.Silva.mail import sendmail
 
-from collective.captcha.form.field import Captcha
+from silva.captcha import Captcha
 from silva.core.interfaces import ISilvaObject
 from silva.core.layout import interfaces
 from silva.core.views.interfaces import INonCachedLayer
@@ -49,6 +49,7 @@ class MailThatPage(silvaforms.PublicForm):
     def send(self):
         errors, data = self.extractData()
         if errors:
+            self.status = _(u"Please correct the errors.")
             return silvaforms.FAILURE
 
         to = data['to']
