@@ -4,9 +4,10 @@
 # $Id$
 
 from smtplib import SMTPException
-import MimeWriter
-import StringIO
-import base64
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email.encoders import encode_base64
 
 from zope import interface, schema, component
 from zope.i18n import translate
@@ -28,6 +29,15 @@ from five import grok
 _ = MessageFactory("pageactions")
 
 
+def MIMEPdf(pdf_data, filename=None):
+    mime = MIMEBase('application', 'pdf')
+    mime.set_payload(pdf_data)
+    if filename is not None:
+        mime.add_header('Content-Disposition', 'attachement', filename=filename)
+    encode_base64(mime)
+    return mime
+
+
 class IMailForm(interface.Interface):
     to = schema.TextLine(title=_(u"To"))
     subject = schema.TextLine(title=_(u"Subject"))
@@ -47,51 +57,34 @@ class MailThatPage(silvaforms.PublicForm):
 
     @silvaforms.action(_(u"Send"))
     def send(self):
-        errors, data = self.extractData()
+        data, errors = self.extractData()
         if errors:
             self.status = _(u"Please correct the errors.")
             return silvaforms.FAILURE
 
-        to = data['to']
-        subject = data['subject']
         metadata = interfaces.IMetadata(self.context.get_root())
-        mail_body = metadata('mail-pageactions', 'mail-body')
+        mail_template = metadata('mail-pageactions', 'mail-body')
         mail_from = metadata('mail-pageactions', 'mail-from')
 
-        if (not mail_from) or (not mail_body):
+        if (not mail_from) or (not mail_template):
             self.status = _(u"Mail settings are not configured, "
                             "can't send mail at the moment.")
-            return
+            return silvaforms.FAILURE
 
         url = absoluteURL(self.context, self.request)
-        mail_body = mail_body % {'title': self.context.get_title(), 'url': url}
-        content_type= 'application/pdf; name=%s.pdf' % self.context.getId()
-        pdf = component.getMultiAdapter(
-            (self.context, self.request), name="index.pdf").pdf()
+        body = mail_template % {'title': self.context.get_title(), 'url': url}
+        pdf = component.getMultiAdapter((self.context, self.request), name="index.pdf").pdf()
 
-        message = StringIO.StringIO()
-        writer = MimeWriter.MimeWriter(message)
-        writer.addheader('MIME-Version', '1.0')
-        writer.addheader('Subject', subject)
-        writer.addheader('To', to)
-        writer.addheader('From', mail_from)
-        writer.startmultipartbody('mixed')
+        message = MIMEMultipart()
+        message['Subject'] = data['subject']
+        message['To'] = data['to']
+        message['Form'] = mail_from
 
-        # start off with a text/plain part
-        part = writer.nextpart()
-        part.addheader('Content-Transfer-Encoding', '8bit')
-        body = part.startbody('text/plain; charset="UTF-8"')
-        body.write(mail_body.encode('utf-8'))
-
-        # now add an image part
-        part = writer.nextpart()
-        part.addheader('Content-Transfer-Encoding', 'base64')
-        body = part.startbody(content_type)
-        body.write(base64.encodestring(pdf))
-        writer.lastpart()
+        message.attach(MIMEText(body, 'plain', 'UTF-8'))
+        message.attach(MIMEPdf(pdf, self.context.getId()))
 
         try:
-            sendmail(self.context, message.getvalue(), to, mail_from, subject)
+            sendmail(self.context, message.as_string(), to, mail_from, subject)
         except SMTPException, e:
             self.status = str(e)
         else:
