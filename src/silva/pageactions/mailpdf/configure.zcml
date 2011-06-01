@@ -6,13 +6,14 @@
 
   <include package="five.grok" />
   <include package="megrok.chameleon" />
+  <include package="silva.core.conf" />
   <include package="silva.core.views" />
   <include package="silva.pageactions.base" />
   <include package="silva.pageactions.pdf" />
   <include package="silva.captcha" />
 
   <i18n:registerTranslations directory="i18n" />
-  <five:registerPackage package="." initialize=".initialize" />
+  <five:registerPackage package="." />
   <grok:grok package="." />
 
 </configure>

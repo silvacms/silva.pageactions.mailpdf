@@ -1,8 +1,14 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2009 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
 
 from zope.interface import Interface
-from Products.Silva.ExtensionRegistry import extensionRegistry
 from silva.core.conf.installer import DefaultInstaller
+from silva.core import conf as silvaconf
 
+silvaconf.extension_name('silva.pageactions.mailpdf')
+silvaconf.extension_title('Send that page by mail')
 
 class IExtension(Interface):
     """Extension to send mail.
@@ -23,7 +29,3 @@ class MailInstaller(DefaultInstaller):
 
 install = MailInstaller('silva.pageactions.mailpdf', IExtension)
 
-def initialize(context):
-    extensionRegistry.register(
-        'silva.pageactions.mailpdf', 'Send that page by mail',
-        context, [], install, depends_on=('Silva', 'silva.captcha'),)

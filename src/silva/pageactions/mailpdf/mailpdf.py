@@ -39,8 +39,8 @@ def MIMEPdf(pdf_data, filename=None):
 
 
 class IMailForm(interface.Interface):
-    to = schema.TextLine(title=_(u"To"))
-    subject = schema.TextLine(title=_(u"Subject"))
+    to = schema.TextLine(title=_(u"To"), required=True)
+    subject = schema.TextLine(title=_(u"Subject"), required=True)
     captcha = Captcha(title=_(u"Captcha"), required=True)
 
 
