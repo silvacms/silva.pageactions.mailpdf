@@ -10,6 +10,7 @@ from silva.core import conf as silvaconf
 silvaconf.extension_name('silva.pageactions.mailpdf')
 silvaconf.extension_title('Send that page by mail')
 
+
 class IExtension(Interface):
     """Extension to send mail.
     """
@@ -18,13 +19,12 @@ METADATA = {('Silva Root', 'Silva Publication',): ('mail-pageactions',)}
 
 
 class MailInstaller(DefaultInstaller):
-    __name__ = 'silva.pageactions.mailpdf.install'
 
     def install_custom(self, root):
-        self.configureMetadata(root, METADATA, globals())
+        self.configure_metadata(root, METADATA, globals())
 
     def uninstall_custom(self, root):
-        self.unconfigureMetadata(root, METADATA)
+        self.unconfigure_metadata(root, METADATA)
 
 
 install = MailInstaller('silva.pageactions.mailpdf', IExtension)
