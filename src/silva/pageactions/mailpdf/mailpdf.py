@@ -84,7 +84,11 @@ class MailThatPage(silvaforms.PublicForm):
         message.attach(MIMEPdf(pdf, self.context.getId()))
 
         try:
-            sendmail(self.context, message.as_string(), to, mail_from, subject)
+            sendmail(self.context,
+                     message.as_string(),
+                     data['to'],
+                     mail_from,
+                     data['subject'])
         except SMTPException, e:
             self.status = str(e)
         else:
