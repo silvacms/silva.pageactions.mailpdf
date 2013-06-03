@@ -8,13 +8,13 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email.encoders import encode_base64
+import urllib
 
 from zope import interface, schema, component
 from zope.i18n import translate
 from zope.i18nmessageid import MessageFactory
 from zope.traversing.browser import absoluteURL
 
-from Products.Silva import mangle
 from Products.Silva.mail import sendmail
 
 from silva.captcha import Captcha
@@ -73,7 +73,9 @@ class MailThatPage(silvaforms.PublicForm):
 
         url = absoluteURL(self.context, self.request)
         body = mail_template % {'title': self.context.get_title(), 'url': url}
-        pdf = component.getMultiAdapter((self.context, self.request), name="index.pdf").pdf()
+        pdf = component.getMultiAdapter(
+            (self.context, self.request),
+            name="index.pdf").pdf()
 
         message = MIMEMultipart()
         message['Subject'] = data['subject']
@@ -92,9 +94,10 @@ class MailThatPage(silvaforms.PublicForm):
         except SMTPException, e:
             self.status = str(e)
         else:
-            exit_url = mangle.urlencode(
-                url, message_status=translate(
-                    _(u"Your message has been sent."), context=self.request))
+            exit_url = url + '?' + urllib.urlencode(
+                [('message_status',
+                  translate(_(u"Your message has been sent."),
+                            context=self.request))])
             self.redirect(exit_url)
         return silvaforms.SUCCESS
 
