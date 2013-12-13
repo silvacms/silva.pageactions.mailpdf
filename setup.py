@@ -5,7 +5,7 @@ version = '1.0.3dev'
 
 setup(name='silva.pageactions.mailpdf',
       version=version,
-      description="Send the current by mail as a PDF.",
+      description="Send the current content by mail as a PDF in Silva CMS",
       long_description=open("README.txt").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       classifiers=[
@@ -16,7 +16,7 @@ setup(name='silva.pageactions.mailpdf',
       keywords='silva pageactions mail pdf',
       author='Infrae',
       author_email='info@infrae.com',
-      url='',
+      url='https://github.com/silvacms/silva.pageactions.mailpdf',
       license='BSD',
       package_dir={'': 'src'},
       packages=find_packages('src'),
